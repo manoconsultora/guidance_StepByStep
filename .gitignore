@@ -1,0 +1,8 @@
+# Local files and credentials
+.DS_Store
+.env
+.env.*
+!.env.example
+node_modules/
+.openai/
+*.log
