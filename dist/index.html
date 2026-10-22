@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#3368a3">
+  <meta name="description" content="ELI Desk Guidance Lab. Un escritorio de demostración con un recorrido interactivo de cuatro pasos.">
+  <title>ELI Desk · Guidance Lab</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%233368a3'/%3E%3Ctext x='16' y='46' fill='white' font-family='Arial' font-weight='bold' font-size='48'%3Ee%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="spotlight-tour.css">
+</head>
+<body>
+  <!-- Reusable icon symbols keep the prototype self-contained. -->
+  <svg class="icon-defs" aria-hidden="true"><defs>
+    <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></symbol>
+    <symbol id="i-ticket" viewBox="0 0 24 24"><path d="M4 4h16v5a3 3 0 0 0 0 6v5H4v-5a3 3 0 0 0 0-6V4Z"/><path d="M14 7v2m0 3v2m0 3v1"/></symbol>
+    <symbol id="i-building" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 7h1m4 0h1M9 11h1m4 0h1M9 15h1m4 0h1m-5 6v-3h4v3"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 21v-3a6 6 0 0 1 12 0v3m1-16a3 3 0 0 1 0 6m3 10v-3a6 6 0 0 0-3-5"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></symbol>
+    <symbol id="i-down" viewBox="0 0 24 24"><path d="m7 10 5 5 5-5"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h16m-6-6 6 6-6 6"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10" cy="10" r="6"/><path d="m15 15 5 5"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9m-11 12a2 2 0 0 0 4 0"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="m12 3 2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5L12 3Z"/></symbol>
+    <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 9a3 3 0 1 1 4 3c-1 .5-1 1-1 2m0 3h.01"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M6 18 18 6"/></symbol>
+  </defs></svg>
+  <div id="app">
+    <!-- ELI Desk shell. Data in this prototype is entirely fictional. -->
+    <aside class="sidebar" aria-label="Navegación principal">
+      <a class="brand" href="#inicio" aria-label="ELI Desk, inicio"><span class="brand-mark">e<span></span></span><span>ELI<span class="brand-desk">Desk</span></span></a>
+      <div class="workspace-label">TU ADMINISTRACIÓN</div>
+      <div class="org-name">Administración Belgrano <span class="org-dot"></span></div>
+      <div class="building-picker-wrap">
+        <button id="building-picker" class="building-picker" aria-expanded="false" aria-controls="building-menu" data-tour="buildings"><span class="picker-icon"><svg class="icon"><use href="#i-building"/></svg></span><span><strong id="selected-building">Todos los edificios</strong><small id="building-count">8 consorcios</small></span><svg class="icon small"><use href="#i-down"/></svg></button>
+        <div id="building-menu" class="building-menu" hidden>
+          <button data-building="all">Todos los edificios <span>8</span></button>
+          <button data-building="Cabildo 2450">Cabildo 2450</button>
+          <button data-building="Olazábal 1830">Olazábal 1830</button>
+          <button data-building="Juramento 2105">Juramento 2105</button>
+        </div>
+      </div>
+      <div class="nav-caption">ESPACIO DE TRABAJO</div>
+      <nav class="nav-list">
+        <button class="nav-item active" data-view="inicio" aria-current="page"><svg class="icon"><use href="#i-grid"/></svg>Vista general</button>
+        <button class="nav-item" data-view="reclamos"><svg class="icon"><use href="#i-ticket"/></svg>Reclamos<span class="nav-count" id="nav-count">24</span></button>
+        <button class="nav-item" data-view="edificios"><svg class="icon"><use href="#i-building"/></svg>Edificios</button>
+        <button class="nav-item" data-view="vecinos"><svg class="icon"><use href="#i-users"/></svg>Vecinos</button>
+      </nav>
+      <div class="sidebar-bottom"><div class="help-box"><span class="mini-robot">:)</span><strong>Un poco de ayuda,<br>un montón de orden.</strong><button id="help-tour">Conocé ELI Desk <svg class="icon small"><use href="#i-arrow"/></svg></button></div><div class="sidebar-meta"><span class="status-dot"></span>Guidance Lab <span>v0.1</span></div></div>
+    </aside>
+    <div class="workspace">
+      <header class="topbar"><div class="breadcrumbs">Tu administración <svg class="icon tiny"><use href="#i-chevron"/></svg><span id="breadcrumb-current">Vista general</span></div><div class="top-actions"><span class="demo-label"><span></span>Datos de demostración</span><div class="notification-wrap"><button class="icon-button" id="notifications" aria-label="Ver notificaciones" aria-expanded="false"><svg class="icon"><use href="#i-bell"/></svg><i></i></button><div class="notification-panel" id="notification-panel" hidden><strong>Estás al día</strong><p>Las novedades de tus reclamos van a aparecer acá.</p><span>Esta es una demostración.</span></div></div><span class="top-divider"></span><div class="profile"><span class="avatar">SM</span><span>Sofía Medina<small>Administradora</small></span></div></div></header>
+      <main id="main-content">
+        <div class="page-heading"><div><div class="eyebrow" id="page-eyebrow">TU DÍA, MÁS SIMPLE</div><h1 id="page-title">Todo en orden<span>.</span></h1><p id="page-subtitle">Un solo lugar para estar al tanto de tus edificios.</p></div><button id="top-tour" class="button button-white"><svg class="icon"><use href="#i-spark"/></svg>Explorar ELI <span class="key-hint">4 pasos</span></button></div>
+        <section id="welcome-banner" class="welcome-banner"><div class="welcome-copy"><div class="welcome-kicker"><span class="status-dot"></span>HOLA, SOY ELI</div><h2>Nos ocupamos del orden.<br>Vos, de lo que importa.</h2><p id="tour-invitation">Conocé tu escritorio en menos de un minuto.</p><button class="banner-start" id="banner-tour">Iniciar recorrido <svg class="icon small"><use href="#i-arrow"/></svg></button></div><div class="welcome-art" aria-hidden="true"><span class="art-orbit orbit-one"></span><span class="art-orbit orbit-two"></span><div class="art-ticket"><span class="art-ticket-icon"><svg class="icon"><use href="#i-check"/></svg></span><span>Todo bajo control<small>Un pendiente menos.</small></span><span class="art-green-dot"></span></div><div class="robot"><span class="antenna"></span><span class="ear ear-left"></span><span class="ear ear-right"></span><div class="robot-face"><span class="eye"></span><span class="eye"></span><span class="robot-smile"></span></div></div><div class="art-message"><svg class="icon"><use href="#i-ticket"/></svg>Reclamo resuelto <svg class="icon small"><use href="#i-check"/></svg></div><span class="art-spark spark-one">✦</span><span class="art-spark spark-two">✧</span></div></section>
+        <section class="metrics" aria-label="Indicadores de la administración" data-tour="metrics">
+          <article class="metric"><div class="metric-top">Reclamos abiertos<span class="metric-icon blue"><svg class="icon"><use href="#i-ticket"/></svg></span></div><div class="metric-value" id="metric-open">24</div><div class="metric-bottom"><span class="trend neutral">8 pendientes</span><span>de asignación</span></div></article>
+          <article class="metric"><div class="metric-top">En curso<span class="metric-icon amber"><svg class="icon"><use href="#i-clock"/></svg></span></div><div class="metric-value" id="metric-progress">12</div><div class="metric-bottom"><span class="mini-dot amber-dot"></span><span>Ya estamos en eso</span></div></article>
+          <article class="metric"><div class="metric-top">Resueltos este mes<span class="metric-icon green"><svg class="icon"><use href="#i-check"/></svg></span></div><div class="metric-value" id="metric-resolved">86</div><div class="metric-bottom"><span class="trend positive">↗ 18%</span><span>vs. mes anterior</span></div></article>
+          <article class="metric"><div class="metric-top">Tiempo de respuesta<span class="metric-icon lilac"><svg class="icon"><use href="#i-clock"/></svg></span></div><div class="metric-value" id="metric-time">2,4 <small>h</small></div><div class="metric-bottom"><span class="trend positive">↘ 32 min</span><span>más rápido</span></div></article>
+        </section>
+        <div class="content-grid" id="overview-grid">
+          <section class="panel claims-panel" id="claims-panel" data-tour="claims"><div class="panel-heading"><div><h2 id="claims-title">Los últimos reclamos</h2><p>Cada pedido, con su próximo paso.</p></div><button id="new-claim" class="button button-primary compact" data-tour="create"><svg class="icon small"><use href="#i-plus"/></svg>Nuevo reclamo</button></div><div class="table-toolbar"><div class="tabs" aria-label="Filtrar reclamos"><button data-filter="all" class="active" aria-pressed="true">Todos</button><button data-filter="Pendiente" aria-pressed="false">Pendientes</button><button data-filter="En curso" aria-pressed="false">En curso</button></div><label class="search-box"><svg class="icon small"><use href="#i-search"/></svg><input id="claim-search" type="search" aria-label="Buscar reclamos" placeholder="Buscar..." autocomplete="off"></label></div><div class="table-scroll"><table class="claims-table"><thead><tr><th>RECLAMO</th><th>EDIFICIO</th><th>ESTADO</th><th><span class="sr-only">Ver</span></th></tr></thead><tbody id="claims-body"></tbody></table></div><div class="table-footer"><span id="claims-count">Mostrando 4 de 24 reclamos</span><button id="view-all">Ver todos <svg class="icon tiny"><use href="#i-arrow"/></svg></button></div></section>
+          <aside class="right-column" id="right-column"><section class="panel activity-panel"><div class="panel-heading"><h2>Lo que está pasando</h2><span class="live-dot"></span></div><div class="activity-list"><div class="activity-item"><span class="activity-icon green"><svg class="icon small"><use href="#i-check"/></svg></span><div><p><strong>Un problema resuelto</strong><br>La luminaria de Olazábal ya funciona.</p><small>Hace 12 minutos</small></div></div><div class="activity-item"><span class="activity-icon blue"><svg class="icon small"><use href="#i-ticket"/></svg></span><div><p><strong>Nuevo reclamo recibido</strong><br>Filtración en Cabildo 2450.</p><small>Hace 35 minutos</small></div></div><div class="activity-item"><span class="activity-icon amber"><svg class="icon small"><use href="#i-users"/></svg></span><div><p><strong>Ya tiene responsable</strong><br>Mantenimiento revisa el ascensor.</p><small>Hace 1 hora</small></div></div></div><div class="activity-footer"><span class="status-dot"></span>ELI conecta cada parte.</div></section></aside>
+        </div>
+        <section class="panel alternate-view" id="alternate-view" hidden></section>
+        <footer class="page-footer"><span>ELI Desk <span>·</span> La gestión, un poco más simple.</span><span>Prototipo interactivo <i></i> Datos ficticios</span></footer>
+      </main>
+    </div>
+  </div>
+  <!-- Native dialog provides focus containment for the demo's secondary flows. -->
+  <dialog id="app-dialog" class="app-dialog"><div id="dialog-content"></div></dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
