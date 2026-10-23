@@ -49,3 +49,5 @@ The repository contains prebuilt static files in `dist/`; no build command is ne
 The Wrangler configuration explicitly disables the automatic `workers.dev` and version URLs. Configure a protected route with Cloudflare Access before exposing this demo. A successful asset deployment alone does not configure authenticated access.
 
 After connecting Git, pushes to the configured production branch should start a new build. If Cloudflare still reports that the Git account is disconnected, inspect the Cloudflare GitHub App installation and its repository access rather than repeatedly disconnecting the project.
+
+The Cloudflare GitHub App must have access to this repository. After fixing repository permissions, push a new commit on the configured production branch to verify that the build trigger is working.
