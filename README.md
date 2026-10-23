@@ -34,3 +34,18 @@ Serve `dist/` using a static HTTP server to run locally. Production access is co
 ## Soft-focus treatment
 
 The overlay uses a self-contained SVG alpha mask to feather the aperture across both the dark backdrop and its blur. The mask moves with eased interpolation; explanatory cards and the exit use short fades. No visible outline is drawn around the focused element. Reduced motion is respected.
+
+## Cloudflare Workers deployment
+
+The repository contains prebuilt static files in `dist/`; no build command is needed.
+
+- Git repository: `manoconsultora/guidance_StepByStep`.
+- Production branch: `feat/eli-guidance-demo`.
+- Root directory: `/`.
+- Build command: leave empty.
+- Deploy command: `npx wrangler deploy`.
+- Worker name: `guidance-stepbystep`, matching `wrangler.jsonc`.
+
+The Wrangler configuration explicitly disables the automatic `workers.dev` and version URLs. Configure a protected route with Cloudflare Access before exposing this demo. A successful asset deployment alone does not configure authenticated access.
+
+After connecting Git, pushes to the configured production branch should start a new build. If Cloudflare still reports that the Git account is disconnected, inspect the Cloudflare GitHub App installation and its repository access rather than repeatedly disconnecting the project.
